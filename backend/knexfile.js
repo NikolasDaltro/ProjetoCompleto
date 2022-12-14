@@ -1,6 +1,6 @@
 module.exports = {
     
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       database: 'knowledge',
       user:     'postgres',
