@@ -55,7 +55,7 @@ module.exports = app =>{
             .select('id', 'name', 'email', 'admin')
             .where({ id: req.params.id })
             .first()
-            .then(user => res.json(users))
+            .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
     }
 
