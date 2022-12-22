@@ -36,7 +36,7 @@ module.exports = app => {
                 .where({ parentId: req.params.id})
             notExistsOrError(subcategory, 'Category has subcategories')
 
-            const articles = await app.db('articles')
+            const articles = await app.db('article')
                 .where({ categoryId: req.params.id})
             notExistsOrError(articles, 'Category has articles')
 
