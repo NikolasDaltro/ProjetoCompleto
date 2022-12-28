@@ -27,7 +27,7 @@ module.exports = app =>{
         }catch(msg){
             return res.status(400).send(msg)
         }
-        user.password= encryptPassword(req.body.password)
+        user.password = encryptPassword(req.body.password)
         delete user.confirmPassword
 
         if(user.id){
