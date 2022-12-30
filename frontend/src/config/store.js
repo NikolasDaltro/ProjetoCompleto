@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vue.Store({
+export default new Vuex.Store({
     state:{
         isMenuVisible: true
     },
