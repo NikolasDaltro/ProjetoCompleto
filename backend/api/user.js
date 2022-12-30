@@ -34,7 +34,7 @@ module.exports = app =>{
             app.db( 'users' )
                 .update(user)
                 .where({ id: user.id })
-                .whereNull('deletedAt')
+                .whereNull('deletedAt') 
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }else{
