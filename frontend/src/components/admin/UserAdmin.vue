@@ -5,8 +5,31 @@
 </template>
 
 <script>
+import { baseApiUrl } from '../../global'
+import axios from 'axios'
+
+
 export default {
-    name: 'UserAdmin'
+    name: 'UserAdmin',
+    data: function(){
+        return{
+            mode: 'save',
+            user: {},
+            users: []
+        }
+    },
+    methods:{
+        loadUsers(){
+            const url = `${baseApiUrl}/users`
+            axios.get(url).then(res =>{
+                this.user = res.data
+                console.log(this.user)
+            })
+        }
+    },
+    mounted(){
+        this.loadUsers()
+    }
 }
 </script>
 
