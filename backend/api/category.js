@@ -5,8 +5,10 @@ module.exports = app => {
         const category = { 
             id: req.body.id,
             name: req.body.name,
-            parentId: req.body.parentId} 
-        if(req.params.id) category.id =req.params.id
+            parentId: req.body.parentId
+        } 
+
+        if(req.params.id) category.id = req.params.id
 
         try{
             existsOrError(category.name, 'Name not Informed')
