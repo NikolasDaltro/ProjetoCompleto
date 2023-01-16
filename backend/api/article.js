@@ -1,11 +1,11 @@
 const queries = require('./queries')
 
 module.exports = app => {
-    const { existsOrError} = app.api.validation
+    const { existsOrError } = app.api.validation
 
     const save = (req, res) => {
         const article = { ...req.body }
-        if (req.params.id) article.id = req.params.id
+        if(req.params.id) article.id = req.params.id
 
         try {
             existsOrError(article.name, 'Nome não informado')
@@ -13,10 +13,11 @@ module.exports = app => {
             existsOrError(article.categoryId, 'Categoria não informada')
             existsOrError(article.userId, 'Autor não informado')
             existsOrError(article.content, 'Conteúdo não informado')
-        } catch (msg) {
+        } catch(msg) {
             res.status(400).send(msg)
         }
-        if (article.id) {
+
+        if(article.id) {
             app.db('article')
                 .update(article)
                 .where({ id: article.id })
@@ -29,20 +30,28 @@ module.exports = app => {
                 .catch(err => res.status(500).send(err))
         }
     }
+
     const remove = async (req, res) => {
         try {
             const rowsDeleted = await app.db('article')
                 .where({ id: req.params.id }).del()
-            existsOrError(rowsDeleted, 'Artigo não encontrado.')
+            
+            try {
+                existsOrError(rowsDeleted, 'Artigo não foi encontrado.')
+            } catch(msg) {
+                return res.status(400).send(msg)    
+            }
 
             res.status(204).send()
-        } catch (msg) {
+        } catch(msg) {
             res.status(500).send(msg)
         }
     }
-    const limit = 10 //usado para paginação
+
+    const limit = 10 // usado para paginação
     const get = async (req, res) => {
         const page = req.query.page || 1
+
         const result = await app.db('article').count('id').first()
         const count = parseInt(result.count)
 
@@ -52,6 +61,7 @@ module.exports = app => {
             .then(articles => res.json({ data: articles, count, limit }))
             .catch(err => res.status(500).send(err))
     }
+
     const getById = (req, res) => {
         app.db('article')
             .where({ id: req.params.id })
@@ -62,17 +72,18 @@ module.exports = app => {
             })
             .catch(err => res.status(500).send(err))
     }
-    const getByCategory = async (req, res) =>{
-        const categoryId =  req.params.id
+
+    const getByCategory = async (req, res) => {
+        const categoryId = req.params.id
         const page = req.query.page || 1
-        const categories = await app.db.raw(queries.categoryWithChildren, req.params.id)
+        const categories = await app.db.raw(queries.categoryWithChildren, categoryId)
         const ids = categories.rows.map(c => c.id)
 
-        app.db({ a: 'articles', u: 'users'})
+        app.db({a: 'article', u: 'users'})
             .select('a.id', 'a.name', 'a.description', 'a.imageUrl', { author: 'u.name' })
-            .limit(limit).ofset(page * limit - limit)
+            .limit(limit).offset(page * limit - limit)
             .whereRaw('?? = ??', ['u.id', 'a.userId'])
-            .whereIn('categoryId',ids)
+            .whereIn('categoryId', ids)
             .orderBy('a.id', 'desc')
             .then(articles => res.json(articles))
             .catch(err => res.status(500).send(err))
