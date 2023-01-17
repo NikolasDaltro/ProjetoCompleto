@@ -52,7 +52,7 @@ module.exports = app => {
     const get = async (req, res) => {
         const page = req.query.page || 1
 
-        const result = await app.db('articles').count('id').first()
+        const result = await app.db('article').count('id').first()
         const count = parseInt(result.count)
 
         app.db('articles')
@@ -85,7 +85,7 @@ module.exports = app => {
             .whereRaw('?? = ??', ['u.id', 'a.userId'])
             .whereIn('categoryId', ids)
             .orderBy('a.id', 'desc')
-            .then(article => res.json(article))
+            .then(articles => res.json(articles))
             .catch(err => res.status(500).send(err))
     }
 
