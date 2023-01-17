@@ -58,7 +58,7 @@ module.exports = app => {
         app.db('articles')
             .select('id', 'name', 'description')
             .limit(limit).offset(page * limit - limit)
-            .then(articles => res.json({ data: articles, count, limit }))
+            .then(article => res.json({ data: article, count, limit }))
             .catch(err => res.status(500).send(err))
     }
 
@@ -85,7 +85,7 @@ module.exports = app => {
             .whereRaw('?? = ??', ['u.id', 'a.userId'])
             .whereIn('categoryId', ids)
             .orderBy('a.id', 'desc')
-            .then(articles => res.json(articles))
+            .then(article => res.json(article))
             .catch(err => res.status(500).send(err))
     }
 
