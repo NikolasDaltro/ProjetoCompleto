@@ -21,9 +21,10 @@ module.exports = app => {
         .get(admin(app.api.category.get))
         .post(admin(app.api.category.save))
 
+    // Cuidado com ordem! Tem que vir antes de /categories/:id
     app.route('/categories/tree')
-    .all(app.config.passport.authenticate())
-    .get(app.api.category.getTree)
+        .all(app.config.passport.authenticate())
+        .get(app.api.category.getTree)
 
     app.route('/categories/:id')
         .all(app.config.passport.authenticate())
@@ -46,9 +47,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .get(app.api.article.getByCategory)
 
-    app.route('/stats')  
-        .all(app.config.passport.authenticate())  
+    app.route('/stats')
+        .all(app.config.passport.authenticate())
         .get(app.api.stat.get)
-
-
 }
