@@ -67,7 +67,7 @@ module.exports = app => {
             .where({ id: req.params.id })
             .first()
             .then(article => {
-                article.content = articles.content.toString()
+                article.content = article.content.toString()
                 return res.json(article)
             })
             .catch(err => res.status(500).send(err))

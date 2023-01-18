@@ -37,6 +37,7 @@ export default {
         padding: 20px;
         border-radius: 8px;
         font-size: 1.2rem;
+        background-color: #1e1e1e;
     }
 
     .article-content img{
