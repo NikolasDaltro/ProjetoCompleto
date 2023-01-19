@@ -27,16 +27,26 @@ export default {
              treeOptions: {
                 propertyNames:{'text': 'name'},
                 filter:{emptyText: 'Categoria não encontrada'}
+               }                           
              }
-        }
-    },
+        },
+
         methods: {
             getTreeData(){
                 const url = `${baseApiUrl}/categories/tree`
                 return axios.get(url).then(res => res.data)
-            }
+            },
+            onNodeeSelect(node){
+                this.$router.push({
+                    name: 'articlesByCategory',
+                    params: { id: node.id }
+                })
+             }
+           },
+           mounted(){
+            this.$refs.tree.$on('node:selected', this.onNodeeSelect)
+           }
         }
-}
 </script>
 
 <style>
