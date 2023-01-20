@@ -27,7 +27,7 @@ export default {
     methods: {
         logout(){
             localStorage.removeItem(userKey)
-            this.$store.commit('setUSer',null)
+            this.$store.dispatch('setUSer',null)
             this.$router.push({ name: 'auth'})
         }
     }

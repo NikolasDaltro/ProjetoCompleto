@@ -37,9 +37,9 @@ export default {
         signin(){
             axios.post(`${baseApiUrl}/signin`, this.user)
                 .then( res => {
-                    this.$store.commit('setUser', res.data)
+                    this.$store.dispatch('setUser', res.data)
                     localStorage.setItem(userKey, JSON.stringify(res.data))
-                    this.router.push({ path: '/' })
+                    this.$router.push({ path: '/' })
                 })
                 .catch(showError)
         },
@@ -96,7 +96,7 @@ export default {
         padding: 5px 15px;
         border: none;
     }
-    
+
     .auth-modal a{
         margin-top: 35px;
     }
