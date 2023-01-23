@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import 'highlightjs/styles/dracula.css'
-import hljs from 'highlightjs/higlight.pack.js'
+import 'highlight.js/styles/dracula.css'
+import hljs from 'highlight.js'
 import { baseApiUrl } from '../../global'
 import axios from 'axios'
 import PageTitle from '../template/PageTitle.vue'
