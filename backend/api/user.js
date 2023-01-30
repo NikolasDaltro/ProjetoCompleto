@@ -67,7 +67,7 @@ module.exports = app =>{
 
     const remove = async (req, res) =>{
         try{
-            const articles = await app.db('articles')
+            const articles = await app.db('article')
                 .where({ userId: req.params.id })
                 notExistsOrError(articles, 'Usuario possui artigos.')
 
